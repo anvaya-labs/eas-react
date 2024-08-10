@@ -18,6 +18,7 @@ export interface EasCreateSchemaProps {
 }
 
 export const EasAttest: React.FC<EasProps>;
+export const EasCreateSchema: React.FC<EasCreateSchemaProps>;
 
 // Interface for schema property
 export interface SchemaProperty {
