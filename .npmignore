@@ -1,0 +1,12 @@
+src/
+config/
+.storybook/
+*.ts
+*.tsx
+*.json
+!README.md
+!LICENSE
+
+!dist/**/*
+!dist/index.d.ts
+!dist/types/index.d.ts
