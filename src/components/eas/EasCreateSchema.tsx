@@ -45,6 +45,8 @@ const EasCreateSchema: React.FC<EasCreateSchemaProps> = (props) => {
     const [resolverAddress, setResolverAddress] = useState<string>("");
     const [isRevocable, setIsRevocable] = useState<boolean>(false);
 
+    const [isCreatingSchema, setIsCreatingSchema] = useState<boolean>(false);
+
     const handleAddField = () => {
         setFields([...fields, { name: "", type: "", isArray: false }]);
     };
@@ -69,6 +71,7 @@ const EasCreateSchema: React.FC<EasCreateSchemaProps> = (props) => {
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
+        setIsCreatingSchema(true);
         const schemaData = fields;
         console.log("Form Data: ", schemaData);
         await createSchema();
@@ -95,6 +98,7 @@ const EasCreateSchema: React.FC<EasCreateSchemaProps> = (props) => {
         // Optional: Wait for transaction to be validated
         const response = await transaction.wait();
         console.log("Transaction response", response);
+        setIsCreatingSchema(false);
     }
 
     return (
@@ -193,8 +197,14 @@ const EasCreateSchema: React.FC<EasCreateSchemaProps> = (props) => {
                                 />
                             </FormControl>
 
-                            <ModalFooter mt={4} justifyContent="space-between">
-                                <Button type="submit" colorScheme="teal">
+                            <ModalFooter mt={4}>
+                                <Button
+                                    type="submit"
+                                    colorScheme="teal"
+                                    mr={3} 
+                                    isLoading={ isCreatingSchema }
+                                    loadingText="Creating Schema..."
+                                >
                                     Create Schema
                                 </Button>
                                 <Button onClick={onClose} variant="outline">
