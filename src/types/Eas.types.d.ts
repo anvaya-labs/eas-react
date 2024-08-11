@@ -1,7 +1,7 @@
 import { TransactionSigner } from "@ethereum-attestation-service/eas-sdk"
 import { Network } from "."
 import React from "react"
-import { ButtonProps, ModalProps } from "@chakra-ui/react"
+import { ButtonProps } from "@chakra-ui/react"
 
 export interface EasProps {
   schemaId: string

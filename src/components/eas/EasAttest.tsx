@@ -180,7 +180,7 @@ const EasAttest: React.FC<EasProps> = (props) => {
                     <ModalBody>
                         <Text fontSize="lg" color="gray.500" mb={4} fontWeight={800}>
                             # {schemaObject.index} &nbsp;|&nbsp;
-                            <Link href={`https://sepolia.easscan.org/schema/view/${schemaObject.id}`} isExternal color="teal.500">
+                            <Link href={`https://sepolia.easscan.org/schema/view/${schemaObject.id}`} isExternal color="blue.500">
                                 Schema ID:  {schemaObject.id && `${schemaObject.id.slice(0, 6)}...${schemaObject.id.slice(-4)}`}
                             </Link>
                         </Text>
@@ -206,7 +206,7 @@ const EasAttest: React.FC<EasProps> = (props) => {
                         ))}
                     </ModalBody>
                     <ModalFooter>
-                        <Button colorScheme="blue"
+                        <Button colorScheme="green"
                             mr={3}
                             onClick={attest}
                             isLoading={isAttestationInProgress}

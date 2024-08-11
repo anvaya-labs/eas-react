@@ -205,7 +205,7 @@ const EasCreateSchema: React.FC<EasCreateSchemaProps> = (props) => {
                             <ModalFooter mt={4}>
                                 <Button
                                     type="submit"
-                                    colorScheme="teal"
+                                    colorScheme="green"
                                     mr={3}
                                     isLoading={isCreatingSchema}
                                     loadingText="Creating Schema..."
