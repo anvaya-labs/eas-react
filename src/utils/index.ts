@@ -4,19 +4,19 @@ import { Field, ParsedSchema } from "../types/Eas.types";
 
 // Function to parse schema string into a structured format
 export const parseSchema = (schema: string): ParsedSchema => {
-    console.log("parsing schema", schema)
-    const properties = schema.split(",");
-    const parsedSchema: ParsedSchema = {};
-  
-    properties.forEach((property) => {
-      const [type, name] = property.split(" ");
-      parsedSchema[name] = { type, value: "" };
-    });
+  console.log("parsing schema", schema);
+  const properties = schema.split(",").map(prop => prop.trim());
+  const parsedSchema: ParsedSchema = {};
 
-    console.log("parsed schema", parsedSchema)
-  
-    return parsedSchema;
-  };
+  properties.forEach((property) => {
+    const [type, name] = property.trim().split(/\s+/);
+    parsedSchema[name] = { type, value: "" };
+  });
+
+  console.log("parsed schema", parsedSchema);
+
+  return parsedSchema;
+};
 
  
 
