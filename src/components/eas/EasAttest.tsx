@@ -31,6 +31,8 @@ const EasAttest: React.FC<EasProps> = (props) => {
     const [recipient, setRecipient] = useState<string>("");
     const [isAttestationInProgress, setIsAttestationInProgress] = useState<boolean>(false);
 
+    const { colorScheme = "green", ...restButtonProps } = props.buttonProps || {};
+
     // Initialize the sdk with the address of the EAS Schema contract address
     const eas = new EAS(networkConfig[props.network].easContractAddress);
     eas.connect(props.signer);
@@ -165,53 +167,57 @@ const EasAttest: React.FC<EasProps> = (props) => {
 
     return (
         <div className="eas-attest-container">
-            <Button colorScheme="teal" onClick={onOpen}>Make Attestation</Button>
-                <Modal isOpen={isOpen} onClose={onClose} size="xl">
-                    <ModalOverlay />
-                    <ModalContent>
-                        <ModalHeader>New Attestation</ModalHeader>
-                        <ModalCloseButton />
-                        <ModalBody>
-                            <Text fontSize="lg" color="gray.500" mb={4} fontWeight={800}>
-                                # {schemaObject.index} &nbsp;|&nbsp;
-                                <Link href={`https://sepolia.easscan.org/schema/view/${schemaObject.id}`} isExternal color="teal.500">
-                                    Schema ID:  {schemaObject.id && `${schemaObject.id.slice(0, 6)}...${schemaObject.id.slice(-4)}`}
-                                </Link>
-                            </Text>
-                            <FormControl mb={4}>
-                                <FormLabel>Recipient Address:</FormLabel>
+            <Button colorScheme={colorScheme} onClick={onOpen}
+                {...restButtonProps}
+            >
+                {props.text || "Attest"}
+            </Button>
+            <Modal isOpen={isOpen} onClose={onClose} size="xl">
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>New Attestation</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                        <Text fontSize="lg" color="gray.500" mb={4} fontWeight={800}>
+                            # {schemaObject.index} &nbsp;|&nbsp;
+                            <Link href={`https://sepolia.easscan.org/schema/view/${schemaObject.id}`} isExternal color="teal.500">
+                                Schema ID:  {schemaObject.id && `${schemaObject.id.slice(0, 6)}...${schemaObject.id.slice(-4)}`}
+                            </Link>
+                        </Text>
+                        <FormControl mb={4}>
+                            <FormLabel>Recipient Address:</FormLabel>
+                            <Input
+                                type="text"
+                                value={recipient}
+                                onChange={(e) => setRecipient(e.target.value)}
+                                placeholder="Enter recipient address"
+                            />
+                        </FormControl>
+
+                        {schema && Object.keys(schema).map((key) => (
+                            <FormControl key={key} id={key} mb={4}>
+                                <FormLabel>{key} <Text as="span" fontSize="sm" color="gray.500">({schema[key].type})</Text>:</FormLabel>
                                 <Input
                                     type="text"
-                                    value={recipient}
-                                    onChange={(e) => setRecipient(e.target.value)}
-                                    placeholder="Enter recipient address"
+                                    value={schema[key].value}
+                                    onChange={(e) => handleInputChange(key, e.target.value)}
                                 />
                             </FormControl>
-
-                            {schema && Object.keys(schema).map((key) => (
-                                <FormControl key={key} id={key} mb={4}>
-                                    <FormLabel>{key} <Text as="span" fontSize="sm" color="gray.500">({schema[key].type})</Text>:</FormLabel>
-                                    <Input
-                                        type="text"
-                                        value={schema[key].value}
-                                        onChange={(e) => handleInputChange(key, e.target.value)}
-                                    />
-                                </FormControl>
-                            ))}
-                        </ModalBody>
-                        <ModalFooter>
-                            <Button colorScheme="blue"
-                                mr={3}
-                                onClick={attest}
-                                isLoading={isAttestationInProgress}
-                                loadingText="Attesting..."
-                            >
-                                Attest
-                            </Button>
-                            <Button variant="ghost" onClick={onClose}>Close</Button>
-                        </ModalFooter>
-                    </ModalContent>
-                </Modal>
+                        ))}
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button colorScheme="blue"
+                            mr={3}
+                            onClick={attest}
+                            isLoading={isAttestationInProgress}
+                            loadingText="Attesting..."
+                        >
+                            Attest
+                        </Button>
+                        <Button variant="ghost" onClick={onClose}>Close</Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
         </div>
     );
 };

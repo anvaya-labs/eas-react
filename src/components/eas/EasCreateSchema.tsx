@@ -47,6 +47,8 @@ const EasCreateSchema: React.FC<EasCreateSchemaProps> = (props) => {
 
     const [isCreatingSchema, setIsCreatingSchema] = useState<boolean>(false);
 
+    const { colorScheme = "green", ...restButtonProps } = props.buttonProps || {};
+
     const handleAddField = () => {
         setFields([...fields, { name: "", type: "", isArray: false }]);
     };
@@ -75,7 +77,7 @@ const EasCreateSchema: React.FC<EasCreateSchemaProps> = (props) => {
         const schemaData = fields;
         console.log("Form Data: ", schemaData);
         await createSchema();
-        
+
         onClose();
     };
 
@@ -104,8 +106,10 @@ const EasCreateSchema: React.FC<EasCreateSchemaProps> = (props) => {
 
     return (
         <Box>
-            <Button onClick={onOpen} colorScheme="teal" leftIcon={<PlusIcon />}>
-                Create EAS Schema
+            <Button onClick={onOpen} colorScheme={colorScheme} leftIcon={<PlusIcon />} 
+            {...restButtonProps}
+            >
+                {props.text || "Create EAS Schema"}
             </Button>
             <Modal isOpen={isOpen} onClose={onClose} size="xl">
                 <ModalOverlay />
@@ -202,8 +206,8 @@ const EasCreateSchema: React.FC<EasCreateSchemaProps> = (props) => {
                                 <Button
                                     type="submit"
                                     colorScheme="teal"
-                                    mr={3} 
-                                    isLoading={ isCreatingSchema }
+                                    mr={3}
+                                    isLoading={isCreatingSchema}
                                     loadingText="Creating Schema..."
                                 >
                                     Create Schema

@@ -1,13 +1,16 @@
 import { TransactionSigner } from "@ethereum-attestation-service/eas-sdk"
 import { Network } from "."
 import React from "react"
+import { ButtonProps, ModalProps } from "@chakra-ui/react"
 
 export interface EasProps {
-  schemaId: string,
+  schemaId: string
   network: Network
   signer: TransactionSigner
   onAttestationComplete?: ({ attestationUid: string, txReceipt: any }) => void
   onAttestationError?: (error: any) => void
+  text?: string
+  buttonProps?: ButtonProps
 }
 
 export interface EasCreateSchemaProps {
@@ -15,6 +18,8 @@ export interface EasCreateSchemaProps {
   signer: TransactionSigner
   onSchemaCreated?: (schemaId: string) => void
   onSchemaCreationError?: (error: any) => void
+  buttonProps?: ButtonProps
+  text?: string
 }
 
 export const EasAttest: React.FC<EasProps>;
