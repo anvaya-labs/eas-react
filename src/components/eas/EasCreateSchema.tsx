@@ -75,9 +75,7 @@ const EasCreateSchema: React.FC<EasCreateSchemaProps> = (props) => {
         const schemaData = fields;
         console.log("Form Data: ", schemaData);
         await createSchema();
-        if (props.onSchemaCreated) {
-            props.onSchemaCreated("schemaId");
-        }
+        
         onClose();
     };
 
@@ -96,8 +94,11 @@ const EasCreateSchema: React.FC<EasCreateSchemaProps> = (props) => {
         });
 
         // Optional: Wait for transaction to be validated
-        const response = await transaction.wait();
-        console.log("Transaction response", response);
+        const schemaUid = await transaction.wait();
+        console.log("Schema Uid:", schemaUid);
+        if (props.onSchemaCreated) {
+            props.onSchemaCreated(schemaUid);
+        }
         setIsCreatingSchema(false);
     }
 
