@@ -35,7 +35,7 @@ function App() {
 }
 ```
 
-### EasAttestSchema
+### EasAttest
 
 ```jsx
 import { EasAttest } from "eas-react";
